@@ -1,6 +1,6 @@
 from .default import *
 
-DEBUG = False
+DEBUG = True
 
 if not DEBUG:
     ALLOWED_HOSTS = ["*"]
