@@ -2,9 +2,12 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from rest_framework_simplejwt.token_blacklist.admin import (
+    OutstandingTokenAdmin as _OutstandingTokenAdmin,
+)
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 
 from apps.authentication.models import User
 
@@ -115,3 +118,12 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ("mobile",)
     ordering = ("created",)
     filter_horizontal = ("groups",)
+
+
+admin.site.unregister(OutstandingToken)
+
+
+@admin.register(OutstandingToken)
+class OutstandingTokenAdmin(_OutstandingTokenAdmin):
+    def has_delete_permission(self, *args, **kwargs):
+        return True
