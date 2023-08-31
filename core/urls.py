@@ -1,11 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
-from drf_spectacular.openapi import AutoSchema
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularRedocView,
-    SpectacularSwaggerView,
-)
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 handler500 = "core.http.exception_handler.server_error"
 handler404 = "core.http.exception_handler.not_found"

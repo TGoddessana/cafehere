@@ -1,10 +1,4 @@
-from django.urls import include, path
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
-from rest_framework_simplejwt.views import (
-    TokenBlacklistView,
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from django.urls import path
 
 from apps.authentication import views
 

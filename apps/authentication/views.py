@@ -1,5 +1,5 @@
-from drf_spectacular.utils import OpenApiExample, extend_schema
-from rest_framework.generics import CreateAPIView, ListAPIView
+from drf_spectacular.utils import extend_schema
+from rest_framework.generics import CreateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.settings import api_settings
@@ -19,7 +19,7 @@ TAG = "Authentication API"
     description="""
 사용자는 전화번호와 비밀번호를 입력하여 회원가입을 할 수 있습니다.
 
-E.164 : 국제 공중 통신 번호 부여 계획(International Public Telecommunication Numbering Plan) 의 규칙을 따릅니다.
+E.164(International Public Telecommunication Numbering Plan) 의 규칙을 따릅니다.
 
 문자열은 다음과 같아야 합니다.
 
