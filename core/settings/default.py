@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     # local apps
     "apps.authentication",
     "apps.cafes",
+    "apps.products",
 ]
 
 MIDDLEWARE = [

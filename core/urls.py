@@ -8,10 +8,10 @@ handler404 = "core.http.exception_handler.not_found"
 urlpatterns = [
     # admin site
     path("admin/", admin.site.urls),
-    # authentication
+    # api
     path("api/v1/", include("apps.authentication.urls"), name="authentication"),
-    # cafes
     path("api/v1/", include("apps.cafes.urls"), name="cafes"),
+    path("api/v1/", include("apps.products.urls"), name="products"),
     # drf auth
     path("api-auth/", include("rest_framework.urls")),
     # api documentation
