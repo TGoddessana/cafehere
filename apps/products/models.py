@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from core.utils.models import TimeStampedMixin, UUID4Mixin
+from core.utils.models import TimeStampedMixin
 
 
 class Category(models.Model):
@@ -73,7 +73,7 @@ class Option(models.Model):
         return f"Option {self.name}"
 
 
-class Product(TimeStampedMixin, UUID4Mixin):
+class Product(TimeStampedMixin):
     name = models.CharField(max_length=30)
     description = models.TextField()
     cost = models.IntegerField(validators=[MinValueValidator(0)])
