@@ -12,6 +12,8 @@ urlpatterns = [
     path("api/v1/", include("apps.authentication.urls"), name="authentication"),
     # cafes
     path("api/v1/", include("apps.cafes.urls"), name="cafes"),
+    # drf auth
+    path("api-auth/", include("rest_framework.urls")),
     # api documentation
     path(
         "docs/",
