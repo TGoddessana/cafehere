@@ -15,6 +15,7 @@ python-dotenv = "^1.0.0"
 gunicorn = "^21.2.0"
 mysqlclient = "^2.2.0"
 python-barcode = "^0.15.1"
+django-filter = "^23.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
