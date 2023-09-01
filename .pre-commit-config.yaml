@@ -17,7 +17,7 @@ repos:
           (?x)^(
               .*\b(migrations)/.*|
               .*\b(settings)/.*|
-              \S+\.tests\.py
+              .*\b(tests)\.py
           )$
 
 
