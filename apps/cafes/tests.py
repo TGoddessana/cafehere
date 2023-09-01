@@ -392,3 +392,8 @@ class CafeDestroyTestCase(BaseAPITestCase):
         url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
 
         # 로그인하지 않은 사용자는 카페를 삭제할 수 없습니다.
+        response = self.client.delete(url)
+        self._test_response_format(response)
+
+        # 전해진 권한 정보가 없으므로 401 UNAUTHORIZED가 반환되어야 합니다.
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
