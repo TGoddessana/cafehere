@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -10,8 +12,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # api
     path("api/v1/", include("apps.authentication.urls"), name="authentication"),
-    path("api/v1/", include("apps.cafes.urls"), name="cafes"),
-    path("api/v1/", include("apps.products.urls"), name="products"),
+    path("api/v1/cafes/", include("apps.cafes.urls"), name="cafes"),
+    path("api/v1/cafes/", include("apps.products.urls"), name="products"),
     # drf auth
     path("api-auth/", include("rest_framework.urls")),
     # api documentation
@@ -26,3 +28,10 @@ urlpatterns = [
         name="swagger-ui",
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    import debug_toolbar
+
+    urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
