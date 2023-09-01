@@ -10,6 +10,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # authentication
     path("api/v1/", include("apps.authentication.urls"), name="authentication"),
+    # cafes
+    path("api/v1/", include("apps.cafes.urls"), name="cafes"),
     # api documentation
     path(
         "docs/",

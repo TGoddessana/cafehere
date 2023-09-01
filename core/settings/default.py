@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     # local apps
     "apps.authentication",
+    "apps.cafes",
 ]
 
 MIDDLEWARE = [
