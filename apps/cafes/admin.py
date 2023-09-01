@@ -5,4 +5,8 @@ from apps.cafes.models import Cafe
 
 @admin.register(Cafe)
 class CafeAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "name",
+        "uuid",
+        "owner",
+    )
