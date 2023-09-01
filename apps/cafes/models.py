@@ -21,4 +21,4 @@ class Cafe(UUID4Mixin, TimeStampedMixin):
         ]
 
     def __str__(self):
-        return self.name
+        return f"Cafe {self.name}"

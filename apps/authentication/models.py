@@ -42,4 +42,4 @@ class User(AbstractBaseUser, UUID4Mixin, TimeStampedMixin, PermissionsMixin):
     )
 
     def __str__(self) -> str:
-        return self.mobile
+        return f"User {self.mobile}"
