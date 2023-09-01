@@ -117,5 +117,6 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Cafehere API",
     "DESCRIPTION": "Your CAFE is right HERE!",
     "VERSION": "1.0.0",
+    "SCHEMA_PATH_PREFIX": "/api/v[0-9]",
     "SERVE_INCLUDE_SCHEMA": False,
 }
