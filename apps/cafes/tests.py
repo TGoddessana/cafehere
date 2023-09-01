@@ -3,13 +3,10 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 
 from apps.cafes.models import Cafe
+from apps.cafes.urls import CAFE_DETAIL_URL_NAME, CAFE_LIST_URL_NAME, CAFE_URL_KEYWORD
 from core.utils.test import BaseAPITestCase
 
 User = get_user_model()
-
-
-CAFE_LIST_URL_NAME = "cafe-list"  # create, list
-CAFE_DETAIL_URL_NAME = "cafe-detail"  # retrieve, update, partial_update, destroy
 
 
 class CafeCreateTestCase(BaseAPITestCase):
@@ -206,7 +203,7 @@ class CafeRetrieveTestCase(BaseAPITestCase):
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
         jenny_cafe = Cafe.objects.create(name="Jenny Cafe", owner=self.cafe_owner_jenny)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # James는 James의 카페만 조회할 수 있습니다.
         self.client.force_login(self.cafe_owner_james)
@@ -225,7 +222,7 @@ class CafeRetrieveTestCase(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
         # Jenny는 Jenny의 카페만 조회할 수 있습니다.
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": jenny_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: jenny_cafe.uuid})
         response = self.client.get(url)
         self._test_response_format(response)
 
@@ -238,7 +235,7 @@ class CafeRetrieveTestCase(BaseAPITestCase):
         """
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # 로그인하지 않은 사용자는 카페를 조회할 수 없습니다.
         response = self.client.get(url)
@@ -272,7 +269,7 @@ class CafeUpdateTestCase(BaseAPITestCase):
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
         jenny_cafe = Cafe.objects.create(name="Jenny Cafe", owner=self.cafe_owner_jenny)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # James는 James의 카페만 수정할 수 있습니다.
         self.client.force_login(self.cafe_owner_james)
@@ -291,7 +288,7 @@ class CafeUpdateTestCase(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
         # Jenny는 Jenny의 카페만 수정할 수 있습니다.
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": jenny_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: jenny_cafe.uuid})
         response = self.client.put(url, data={"name": "Jenny Cafe 2"})
         self._test_response_format(response)
 
@@ -304,7 +301,7 @@ class CafeUpdateTestCase(BaseAPITestCase):
         """
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # 로그인하지 않은 사용자는 카페를 수정할 수 없습니다.
         response = self.client.put(url, data={"name": "James Cafe 2"})
@@ -319,7 +316,7 @@ class CafeUpdateTestCase(BaseAPITestCase):
         """
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # James는 James의 카페만 수정할 수 있습니다.
         self.client.force_login(self.cafe_owner_james)
@@ -359,7 +356,7 @@ class CafeDestroyTestCase(BaseAPITestCase):
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
         jenny_cafe = Cafe.objects.create(name="Jenny Cafe", owner=self.cafe_owner_jenny)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # James는 James의 카페만 삭제할 수 있습니다.
         self.client.force_login(self.cafe_owner_james)
@@ -377,7 +374,7 @@ class CafeDestroyTestCase(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
         # Jenny는 Jenny의 카페만 삭제할 수 있습니다.
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": jenny_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: jenny_cafe.uuid})
         response = self.client.delete(url)
         self._test_response_format(response)
 
@@ -389,7 +386,7 @@ class CafeDestroyTestCase(BaseAPITestCase):
         """
         james_cafe = Cafe.objects.create(name="James Cafe", owner=self.cafe_owner_james)
 
-        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={"uuid": james_cafe.uuid})
+        url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: james_cafe.uuid})
 
         # 로그인하지 않은 사용자는 카페를 삭제할 수 없습니다.
         response = self.client.delete(url)

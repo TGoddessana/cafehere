@@ -2,17 +2,21 @@ from django.urls import path
 
 from apps.cafes import views
 
+CAFE_LIST_URL_NAME = "cafe-list"
+CAFE_DETAIL_URL_NAME = "cafe-detail"
+CAFE_URL_KEYWORD = "cafe_uuid"
+
 urlpatterns = [
     path(
-        "cafes/",
+        "",
         views.CafeAPIViewSet.as_view({"get": "list", "post": "create"}),
-        name="cafe-list",
+        name=CAFE_LIST_URL_NAME,
     ),
     path(
-        "cafes/<uuid:uuid>/",
+        f"<uuid:{CAFE_URL_KEYWORD}>/",
         views.CafeAPIViewSet.as_view(
             {"get": "retrieve", "put": "update", "delete": "destroy"}
         ),
-        name="cafe-detail",
+        name=CAFE_DETAIL_URL_NAME,
     ),
 ]
