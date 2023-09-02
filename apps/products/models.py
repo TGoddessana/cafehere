@@ -43,6 +43,7 @@ class OptionGroup(models.Model):
     )  # 카페가 삭제되면, 카페가 가지고 있는 옵션 그룹들도 모두 삭제됩니다.
 
     class Meta:
+        # 카페 안에서 생성되는 옵션 그룹들은 중복된 이름을 가질 수 없습니다.
         constraints = [
             models.UniqueConstraint(
                 fields=["name", "cafe"],
@@ -59,7 +60,9 @@ class Option(models.Model):
     add_price = models.IntegerField(validators=[MinValueValidator(0)])
 
     # 옵션 그룹이 삭제되면, 옵션 그룹이 가지고 있는 옵션들도 모두 삭제됩니다.
-    option_group = models.ForeignKey(OptionGroup, on_delete=models.CASCADE)
+    option_group = models.ForeignKey(
+        OptionGroup, on_delete=models.CASCADE, related_name="options"
+    )
 
     class Meta:
         # 옵션 그룹 안에서 생성되는 옵션들은 중복된 이름을 가질 수 없습니다.
@@ -83,6 +86,9 @@ class Product(TimeStampedMixin):
     initial_consonant = models.CharField(
         max_length=30, editable=False
     )  # 초성 필드. 한글이 입력되면 자동으로 초성이 저장됩니다.
+    barcode = models.ImageField(
+        upload_to="products/barcodes", blank=True, null=True
+    )  # 바코드 이미지 필드.
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="products"
     )
