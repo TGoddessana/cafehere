@@ -213,6 +213,20 @@ class ProductListTestCase(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data["data"]), 1)
 
+    def test_list_with_filtering_category(self):
+        """
+        카테고리 필터링이 가능한지 테스트합니다.
+        카테고리 이름으로 검색을 수행하면, 해당 카테고리에 속한 상품만 검색되어야 합니다.
+        """
+        url = reverse(
+            PRODUCT_LIST_URL_NAME,
+            kwargs={"cafe_uuid": self.cafe_for_james.uuid},
+        )
+        self.client.force_login(self.owner_james)
+        response = self.client.get(url, {"category": self.category_for_james2.name})
+        self._test_response_format(response)
+        self.assertEqual(len(response.data["data"]), 1)
+
     def test_list_with_filtering_initial_consonant(self):
         """
         한글 초성으로 검색이 가능한지 테스트합니다.
