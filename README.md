@@ -167,9 +167,7 @@ class CafehereRenderer(JSONRenderer):
 
 - Code style was standardized using `black`.
 - Import order was standardized using `isort`.
-- Code style was checked using `flake
-
-8`.
+- Code style was checked using `flake8`.
 
 - The above three operations were automated using `pre-commit`.
 
