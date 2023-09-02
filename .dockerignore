@@ -1,0 +1,7 @@
+.github
+.gitignore
+.env
+.git
+nginx.conf
+.pre-commit-config.yaml
+README.md
