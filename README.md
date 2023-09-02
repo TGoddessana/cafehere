@@ -1,97 +1,101 @@
 # Your Cafe is right HERE! - CafeHere
 
-## 이것은 무엇인가요?
+korean version: [README.kor.md](readme/README.kor.md)
 
-상품을 등록하고, 나만의 카페를 운영하고 싶은 사장님들을 위한 `HTTP API` 서버입니다.  
-해당 서버를 이용하여 카페의 상품을 관리할 수 있습니다.
+## What is this?
 
-## 조금 더 자세히 설명해주세요.
+This is an `HTTP API` server for owners who want to register products and operate their own cafes.  
+You can use this server to manage your cafe's products.
 
-### 회원 관련 API
+## Tell me more.
 
-- 사장님은 전화번호와 비밀번호로 회원가입을 할 수 있습니다.
-    - 회원가입 시, 전화번호는 `E.164` 포맷을 따라야 합니다. (https://www.itu.int/rec/T-REC-E.164-201011-I/en)
-    - 회원가입 시, 비밀번호는 단방향 암호화되어 저장됩니다.
-- 사장님은 전화번호와 비밀번호로 로그인을 할 수 있습니다.
-    - 로그인은 JWT를 이용하여 구현되었습니다.
-    - Access Token 만료 시간은 5분, Refresh Token 만료 시간은 1주일로 설정되어 있습니다.
-    - 한 번 사용된 Refresh Token은 더 이상 사용할 수 없습니다. (Refresh Token Rotation)
-    - 사용자는 Refresh Token 을 블랙리스트에 추가함으로서, 로그아웃을 할 수 있습니다.
+### Member-related API
 
-### 카페 관련 API
+- Owners can sign up with their phone number and password.
+    - When signing up, the phone number must follow the `E.164`
+      format. (https://www.itu.int/rec/T-REC-E.164-201011-I/en)
+    - When signing up, the password is stored securely through one-way encryption.
+- Owners can log in with their phone number and password.
+    - Login is implemented using JWT.
+    - Access Token expires in 5 minutes, and Refresh Token expires in 1 week.
+    - Once a Refresh Token is used, it cannot be used again (Refresh Token Rotation).
+    - Users can log out by adding the Refresh Token to the blacklist.
 
-- 사장님은 로그인 후 카페 관련 아래의 행동을 할 수 있습니다.
-    - 카페를 등록할 수 있습니다.
-    - 카페의 속성을 부분 수정할 수 있습니다.
-    - 등록한 카페의 상세 정보를 조회할 수 있습니다.
-    - 등록한 카페를 삭제할 수 있습니다.
-    - 로그인하지 않았다면 카페 관련 API를 사용할 수 없습니다.
-    - 로그인했더라도, 다른 사장님의 카페를 조회할 수 없습니다.
+### Cafe-related API
 
-### 상품 관련 API
+- After logging in, owners can perform the following actions related to cafes:
+    - Register a cafe.
+    - Partially modify the cafe's attributes.
+    - Retrieve detailed information about registered cafes.
+    - Delete registered cafes.
+    - If not logged in, owners cannot use cafe-related APIs.
+    - Even if logged in, they cannot access other owners' cafes.
 
-- 사장님은 로그인 후 상품 관련 아래의 행동을 할 수 있습니다.
-    - 상품을 등록할 수 있습니다.
-    - 상품의 속성을 부분 수정할 수 있습니다.
-    - 등록한 상품의 목록을 조회할 수 있습니다. Cursor 기반의 페이징을 지원합니다.
-    - 등록한 상품을 검색할 수 있습니다. 초성 검색과 이름 검색을 지원합니다.
-    - 등록한 상품의 상세 정보를 조회할 수 있습니다.
-    - 등록한 상품을 삭제할 수 있습니다.
-    - 로그인하지 않았다면 상품 관련 API를 사용할 수 없습니다.
-    - 로그인했더라도, 다른 사장님의 카페의 상품을 조회할 수 없습니다.
-- 사장님은 로그인 후 카테고리 관련 아래의 행동을 할 수 있습니다.
-    - 카테고리를 등록할 수 있습니다.
-    - 카테고리의 속성을 부분 수정할 수 있습니다.
-    - 등록한 카테고리의 목록을 조회할 수 있습니다.
-    - 등록한 카테고리의 상세정보를 조회할 수 있습니다.
-    - 로그인하지 않았다면 카테고리 관련 API를 사용할 수 없습니다.
-    - 로그인했더라도, 다른 사장님의 카테고리를 조회할 수 없습니다.
-- 사장님은 로그인 후 상품의 옵션 관련 아래의 행동을 할 수 있습니다.
-    - 옵션 그룹을 등록할 수 있습니다.
-    - 옵션 그룹을 삭제할 수 있습니다.
-    - 로그인하지 않았다면 상품 옵션 관련 API를 사용할 수 없습니다.
-    - 로그인했더라도, 다른 사장님의 상품 옵션 정보를 조회할 수 없습니다.
+### Product-related API
 
-## 어떤 기술을 사용했나요?
+- After logging in, owners can perform the following actions related to products:
+    - Register a product.
+    - Partially modify the product's attributes.
+    - Retrieve a list of registered products. Supports cursor-based paging.
+    - Search for registered products. Supports initial search and name search.
+    - Retrieve detailed information about registered products.
+    - Delete registered products.
+    - If not logged in, owners cannot use product-related APIs.
+    - Even if logged in, they cannot access other owners' cafe products.
+- After logging in, owners can perform the following actions related to categories:
+    - Register a category.
+    - Partially modify the category's attributes.
+    - Retrieve a list of registered categories.
+    - Retrieve detailed information about registered categories.
+    - If not logged in, owners cannot use category-related APIs.
+    - Even if logged in, they cannot access other owners' categories.
+- After logging in, owners can perform the following actions related to product options:
+    - Register an option group.
+    - Delete an option group.
+    - If not logged in, owners cannot use product option-related APIs.
+    - Even if logged in, they cannot access other owners' product option information.
 
-메인 언어로 `Python 3.11`을 사용하였습니다.
+## What technologies were used?
 
-`Django` 와 `Django REST Framework` 를 사용하여 서버를 구현하였습니다.
+The main language used is `Python 3.11`.
 
-`Docker` 와 `Docker Compose` 를 사용하여 언어와 상관없이 서버를 실행할 수 있습니다.
+The server is implemented using `Django` and `Django REST Framework`.
 
-`MySQL 5.7` 데이터베이스를 사용했습니다.
+`Docker` and `Docker Compose` are used to run the server regardless of the language.
 
-## 고민되는 점이 있었나요?
+`MySQL 5.7` is used as the database.
 
-#### 1. 전화번호 포맷을 어떻게 검증할까?
+## Were there any challenges?
 
-- 전화번호에 대한 유효성 검증을 하는 것이 많이 고민이었습니다. 국내 번호의 경우뿐만 아니라, 국제 번호까지 고려해야 했기 때문이죠.
-- 전화번호는 `E.164` 포맷을 따라야 합니다. (https://www.itu.int/rec/T-REC-E.164-201011-I/en)
-- "국제 번호" 와 "전화번호" 사이에는 하이픈(-)이 들어가야 합니다.
-- 결과적으로는, `r"^\+[0-9]{1,4}+-[0-9]{1,14}$"` 정규식을 사용하여 검증하도록 구현했습니다.
-- 한계점은, 국가 코드가 실제 존재하는 국가의 것인지 확인하지 못한다는 것입니다.
+#### 1. How to validate the phone number format?
 
-#### 2. 사장님은 하나의 가게만 가질 수 있을까?
+- Validating phone numbers was a significant challenge. It had to consider both domestic and international numbers.
+- Phone numbers must follow the `E.164` format. (https://www.itu.int/rec/T-REC-E.164-201011-I/en)
+- A hyphen (-) must be included between the "international code" and the "phone number."
+- In the end, validation was implemented using the regular expression `r"^\+[0-9]{1,4}+-[0-9]{1,14}$"`.
+- One limitation is that it cannot verify if the country code corresponds to a real country.
 
-- 현재는 사장님이 여러 개의 가게를 가질 수 있도록 구현되어 있습니다.
-- 사업 수완이 좋으신 분들은 여러 개의 가게를 운영하실 수도 있으니까요.
-- 그래서, 먼저 "내 가게를 오픈하는 API" 를 구현해야겠다고 마음먹었습니다.
+#### 2. Can owners have only one cafe?
 
-#### 3. 상품의 옵션은 어떻게 구현할까?
+- Currently, owners can have multiple cafes.
+- For those who are entrepreneurial, they can operate multiple cafes.
+- Therefore, I decided to implement the "Open My Cafe API" first.
 
-- 예를 들어, 커피라면 "사이즈", "샷 추가", "시럽 추가" 등의 옵션을 선택할 수 있습니다.
-- 혹은 케이크의 경우 "사이즈", "토핑" 등의 옵션을 선택할 수 있겠죠.
-- 그래서, 옵션을 묶는 옵션 그룹을 만들고, 옵션 그룹 API 를 통해서 옵션을 관리하도록 구현했습니다.
-- 또, 데이터베이스에는 동일한 이름의 옵션 그룹이 저장될 수 있지만 한 카페 내에서는 동일한 옵션 그룹 이름을 가지지 않도록 구현했습니다.
-- 결과적으로, 하나의 카페는 해당 카페 안에서 유일한 이름을 가지는 옵션 그룹을, 하나의 옵션 그룹은 해당 옵션 그룹 안에서 유일한 이름을 가지는 옵션을 가질 수 있습니다.
-- 하나의 상품은 여러 개의 옵션 그룹을, 하나의 옵션 그룹은 여러 개의 상품을 가질 수 있도록 구현했습니다.
+#### 3. How to implement product options?
 
-#### 4. 인증 정보에 따른 권한을 어떻게 처리해야 할까?
+- For example, for coffee, options like "size," "extra shot," and "syrup" can be selected.
+- Or for cakes, options like "size" and "topping" can be selected.
+- So, I created option groups to group options and implemented option management through the option group API.
+- Additionally, I ensured that the same option group name cannot exist in the same cafe in the database.
+- As a result, one cafe can have unique-named option groups, and one option group can have unique-named options.
+- One product can have multiple option groups, and one option group can have multiple products.
 
-- 가장 먼저 든 생각은 HTTP 표준 상태 코드를 따르자는 것이었습니다.
-- `401 Unauthorized` 는 인증 정보가 없는 경우, `403 Forbidden` 은 인증 정보가 있지만 권한이 없는 경우에 사용됩니다.
-- 아래와 같은 `Permission` 클래스를 구현하여, `403 Forbidden` 을 반환하도록 구현했습니다.
+#### 4. How to handle permissions based on authentication?
+
+- My initial thought was to follow HTTP standard status codes.
+- `401 Unauthorized` is used when there is no authentication, and `403 Forbidden` is used when there is authentication
+  but no permission.
+- I implemented a `Permission` class as shown below to return `403 Forbidden`.
 
 ```python
 class IsCafeOwner(IsAuthenticated):
@@ -105,17 +109,17 @@ class IsCafeOwner(IsAuthenticated):
         return super().has_permission(request, view)
 ```
 
-#### 5. 상품의 검색을 어떻게 구현할까?
+#### 5. How to implement product searching?
 
-- 검색은 간단한 `Django-filter` 를 사용하여 구현했습니다.
-- 초성 검색은, 데이터베이스에 따로 "초성" 필드를 저장함으로서 구현되었습니다.
-    - 데이터베이스에 새로운 상품이 저장되거나 정보가 업데이트 될 때마다, 해당 상품의 이름을 초성으로 변환하여 저장합니다.
-    - 추후 검색 시, 초성으로 검색할 수 있습니다.
-    - 초성 정보는 상세 정보 등 조회 시에는 반환되지 않습니다.
+- Searching was implemented using `Django-filter`.
+- Initial search was implemented by storing the "initial" field in the database separately.
+    - Whenever a new product is saved or updated, its name is converted to initials and stored.
+    - This allows searching by initials.
+    - Initials are not returned when viewing detailed information.
 
-#### Custom JSON Response 를 어떻게 구현할까?
+#### How to implement a Custom JSON Response?
 
-- 해당 서버에서 반환하는 모든 API 가 일관된 형식을 가지도록 구현하기 위해, 아래와 같은`Custom JSON Renderer` 를 구현했습니다.
+- To ensure a consistent response format for all APIs on the server, I implemented a `Custom JSON Renderer` as follows:
 
 ```python
 class CafehereRenderer(JSONRenderer):
@@ -135,12 +139,12 @@ class CafehereRenderer(JSONRenderer):
             )
 
         response_format = ResponseFormat(
-            code=response_context.status_code,  # 상태 코드 반환
+            code=response_context.status_code,  # Return the status code
             message="ok"
             if not response_context.exception
             else response_context.data.get(
                 "detail", response_context.data
-            ),  # 예외가 발생하지 않았다면 "ok"를, 발생했다면 예외 메시지를 반환
+            ),  # Return "ok" if no exception, otherwise return the exception message
             data=response_context.data if not response_context.exception else None,
         ).to_dict()
 
@@ -153,33 +157,36 @@ class CafehereRenderer(JSONRenderer):
         )
 ```
 
-- 하지만 위의 구현은, `Django REST Framework` 를 사용하는 경우에만 적용됩니다.
-- 그리하여, `Django` 에서 반환하는 404, 500 등의 예외에 대해서는 별도로 `handler` 를 작성했습니다.
-- 아쉬운 점은, 문서화 도구인 `drf-spectacular` 가 그것에 대한 처리를 별도로 해 주지 못한다는 것입니다.
-    - 관련 Github issue : https://github.com/tfranzel/drf-spectacular/issues/429
-    - 그리하여 현재 생성되는 OpenAPI 사양은 완벽하지 않습니다.
+- However, this implementation applies only when using `Django REST Framework`.
+- Therefore, for exceptions like 404 and 500 returned by Django, a separate handler was written.
+- Note that the documentation tool `drf-spectacular` does not handle this separately.
+    - Related Github issue: https://github.com/tfranzel/drf-spectacular/issues/429
+    - As a result, the generated OpenAPI specification is not perfect.
 
-#### 코드의 스타일을 어떻게 통일할까?
+#### How to unify code style?
 
-- `black` 을 사용하여 코드의 스타일을 통일했습니다.
-- `isort` 를 사용하여 코드의 import 순서를 통일했습니다.
-- `flake8` 을 사용하여 코드의 스타일을 검사했습니다.
-- `pre-commit` 을 사용하여 위의 세 가지를 자동으로 수행하도록 했습니다.
+- Code style was standardized using `black`.
+- Import order was standardized using `isort`.
+- Code style was checked using `flake
 
-#### 내 코드가 잘 작동하는지 어떻게 확인할까?
+8`.
 
-- `Unittest` 를 사용하여 코드의 테스트를 작성했습니다.
-- 응답 포맷이 원하는 대로 나오는 것인지 테스트하기 위해서, 응답 포맷을 테스트하는 메서드를 가지는 기본 클래스를 작성했습니다.
+- The above three operations were automated using `pre-commit`.
+
+#### How to test if my code works correctly?
+
+- Tests were written using `Unittest`.
+- To test if the response format is as expected, a base class with a method for testing response format was created.
 
 ```python
 class BaseAPITestCase(APITestCase):
     def _test_response_format(self, response):
         """
-        응답 포맷이 올바른지 테스트하는 메서드입니다.
+        Test if the response format is correct.
 
-        1. STATUS_CODE 가 204 인 경우
-        2. STATUS_CODE 가 200 혹은 201 인 경우
-        3. 그 외의 경우 ( 400, 401, 403, 404, 500 등 )
+        1. When STATUS_CODE is 204
+        2. When STATUS_CODE is 200 or 201
+        3. For other cases (e.g., 400, 401, 403, 404, 500, etc.)
         """
 
         if response.status_code == status.HTTP_204_NO_CONTENT:
@@ -194,20 +201,22 @@ class BaseAPITestCase(APITestCase):
 
     def _test_success_response_format(self, response):
         """
-        201 혹은 201 응답인 경우, "data" 키는 null 이 들어가면 안 됩니다.
+        When STATUS_CODE is 201 or 201, the "data" key should not be null.
         """
         self._test_base_response_format(response)
         self.assertIsNotNone(response.data["data"])
 
     def _test_error_response_format(self, response):
         """
-        에러 응답인 경우, "data" 키에는 null 이 들어가야 합니다.
+        When it's an error response, the "data" key should be null.
         """
         self._test_base_response_format(response)
         self.assertIsNone(response.data["data"])
 
     def _test_base_response_format(self, response):
         """
+        Test if the response format has the following keys:
+
         {
             "meta": {
                 "code": 200,
@@ -215,7 +224,6 @@ class BaseAPITestCase(APITestCase):
             },
             "data": {"products": [...]},
         }
-        위의 형식에 따른 키를 가지고 있는지 테스트합니다.
         """
         self.assertIn("meta", response.data)
         self.assertIn("code", response.data["meta"])
@@ -224,46 +232,47 @@ class BaseAPITestCase(APITestCase):
 
     def _test_204_response_format(self, response):
         """
-        상태 코드가 204 NO CONTENT 인 경우를 테스트합니다.
+        Test when the STATUS_CODE is 204 NO CONTENT.
         """
 
         self.assertEqual(response.data, None)
 ```
 
-- 현재, 31개의 테스트 케이스를 통과했습니다.
+- Currently, it has passed 31 test cases.
 
-## 실행 방법을 알려주세요. 사용해 보고 싶어요!
+## How to run it? I want to try it out!
 
-### 1. 환경 변수 설정
+### 1. Set Environment Variables
 
-`.env.example` 파일의 예시에 맞춰 `.env` 파일을 생성합니다.
+Create a `.env` file following the example in the `.env.example` file.
 
 ```.env
-SECRET_KEY= # Django 에서 사용될 SECRET_KEY 입니다.
+SECRET_KEY= # Your Django SECRET_KEY here
 
-DJANGO_SUPERUSER_MOBILE= # Django 에서 사용될 슈퍼유저의 전화번호입니다.
-DJANGO_SUPERUSER_PASSWORD= # Django 에서 사용될 슈퍼유저의 비밀번호입니다.
+DJANGO_SUPERUSER_MOBILE= # Mobile number for the Django superuser
+DJANGO_SUPERUSER_PASSWORD= # Password for the Django superuser
 
-# 데이터베이스 접속 정보입니다. Django 와 MySQL 컨테이너 둘 다 이 환경 변수를 공유합니다.
+# Database connection information shared by both Django and MySQL containers
 MYSQL_ROOT_PASSWORD=root-password
 MYSQL_DATABASE=cafehere-db
 MYSQL_USER=cafehere-admin
 MYSQL_PASSWORD=root-password
 ```
 
-### 2. Docker Compose 실행
+### 2. Run Docker Compose
 
-아래의 명령어를 작업 디렉토리에서 수행하여 컨테이너를 실행합니다.
+Run the following command in your working directory to start the containers.
 
-현재 `Docker Compose` 는 `Mac M1` 전용으로 작성되었습니다. (MySQL 컨테이너)
+Currently, the Docker Compose file is designed for `Mac M1` (MySQL container).
 
 ```bash
 docker compose up -d
 ```
 
-### 3. django 셋업
+### 3. Set up Django
 
-아래의 명령어를 작업 디렉토리에서 수행하여 데이터베이스 마이그레이션, 슈퍼유저 생성, 정적 파일 수집을 수행합니다.
+Run the following command in your working directory to perform database migration, create a superuser, and collect
+static files.
 
 ```bash
 docker compose run cafehere-was python manage.py migrate --settings core.settings.production &&\
@@ -271,9 +280,7 @@ docker compose run cafehere-was python manage.py createsuperuser --no-input --se
 docker compose run cafehere-was python manage.py collectstatic --settings core.settings.production
 ```
 
-http://127.0.0.1:8000/ 에 접속해 보세요. :) 멋진 Swagger UI 가 나올 겁니다.
+Visit http://127.0.0.1:8000/ to see the Swagger UI. Enjoy exploring! :)
 
-현재 Swagger UI 는 `drf-spectacular` 를 사용하여 자동으로 생성되고 있습니다만, `Custom JSON Renderer` 를 사용하기 때문에 완벽하지 않습니다.
-이에 유의해 주세요!
-
-
+Please note that the current Swagger UI is automatically generated using `drf-spectacular` but is not perfect due to the
+use of `Custom JSON Renderer`. Keep this in mind!
