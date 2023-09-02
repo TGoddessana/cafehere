@@ -24,7 +24,7 @@ DATABASES = {
     }
 }
 
-SEE_SQL = True
+SEE_SQL = False
 
 if SEE_SQL:
     LOGGING = {
