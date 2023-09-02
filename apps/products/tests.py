@@ -267,3 +267,105 @@ class ProductListTestCase(BaseAPITestCase):
         response = self.client.get(url, {"search": "녹차"})
         self._test_response_format(response)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class ProductDeleteTestCase(BaseAPITestCase):
+    """
+    상품 삭제 테스트
+    """
+
+    def setUp(self):
+        """
+        테스트에 필요한 유저, 카페, 카테고리, 상품을 생성
+        """
+        self.owner_james = User.objects.create_user(
+            mobile="+82-1012345678", password="test_password"
+        )
+        self.cafe_for_james = Cafe.objects.create(
+            name="James's Cafe", owner=self.owner_james
+        )
+        self.category_for_james = Category.objects.create(
+            name="Coffee", cafe=self.cafe_for_james
+        )
+        self.category_for_james2 = Category.objects.create(
+            name="Cake", cafe=self.cafe_for_james
+        )
+        self.product_for_james1 = Product.objects.create(
+            name="아메리카노",
+            description="Icy Americano!",
+            cost=2000,
+            price=3000,
+            expireation_date=timezone.now(),
+            category=self.category_for_james,
+        )
+        self.product_for_james2 = Product.objects.create(
+            name="에스프레소",
+            description="Simple Espresso!",
+            cost=2000,
+            price=3000,
+            expireation_date=timezone.now(),
+            category=self.category_for_james,
+        )
+        self.product_for_james3 = Product.objects.create(
+            name="초코케이크",
+            description="Chocolate Cake!",
+            cost=2000,
+            price=3000,
+            expireation_date=timezone.now(),
+            category=self.category_for_james2,
+        )
+
+        self.owner_jenny = User.objects.create_user(
+            mobile="+82-1012345679", password="test_password"
+        )
+        self.cafe_for_jenny = Cafe.objects.create(
+            name="Jenny's Cafe", owner=self.owner_jenny
+        )
+        self.category_for_jenny = Category.objects.create(
+            name="Tea", cafe=self.cafe_for_jenny
+        )
+        self.product_for_jenny = Product.objects.create(
+            name="녹차",
+            cost=2000,
+            price=4000,
+            expireation_date=timezone.now(),
+            category=self.category_for_jenny,
+        )
+
+    def test_delete_own_product(self):
+        """
+        자신의 상품만 삭제할 수 있습니다.
+        """
+        url = reverse(
+            "product-detail",
+            kwargs={
+                "cafe_uuid": self.cafe_for_james.uuid,
+                "product_id": self.product_for_james1.id,
+            },
+        )
+        self.client.force_login(self.owner_james)
+        response = self.client.delete(url)
+        self._test_response_format(response)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        # 삭제된 상품은 조회할 수 없습니다.
+
+        response = self.client.delete(url)
+        self._test_response_format(response)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_another_cafe_product(self):
+        """
+        다른 카페의 상품은 삭제할 수 없습니다.
+        """
+        url = reverse(
+            "product-detail",
+            kwargs={
+                "cafe_uuid": self.cafe_for_jenny.uuid,
+                "product_id": self.product_for_jenny.id,
+            },
+        )
+        self.client.force_login(self.owner_james)
+        response = self.client.delete(url)
+        self._test_response_format(response)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
