@@ -1,6 +1,7 @@
 import uuid
 
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.reverse import reverse
 
@@ -123,12 +124,15 @@ class ProductListTestCase(BaseAPITestCase):
         self.category_for_james = Category.objects.create(
             name="Coffee", cafe=self.cafe_for_james
         )
+        self.category_for_james2 = Category.objects.create(
+            name="Cake", cafe=self.cafe_for_james
+        )
         self.product_for_james1 = Product.objects.create(
             name="아메리카노",
             description="Icy Americano!",
             cost=2000,
             price=3000,
-            expireation_date="2025-12-31",
+            expireation_date=timezone.now(),
             category=self.category_for_james,
         )
         self.product_for_james2 = Product.objects.create(
@@ -136,8 +140,16 @@ class ProductListTestCase(BaseAPITestCase):
             description="Simple Espresso!",
             cost=2000,
             price=3000,
-            expireation_date="2025-12-31",
+            expireation_date=timezone.now(),
             category=self.category_for_james,
+        )
+        self.product_for_james3 = Product.objects.create(
+            name="초코케이크",
+            description="Chocolate Cake!",
+            cost=2000,
+            price=3000,
+            expireation_date=timezone.now(),
+            category=self.category_for_james2,
         )
 
         self.owner_jenny = User.objects.create_user(
@@ -153,7 +165,7 @@ class ProductListTestCase(BaseAPITestCase):
             name="녹차",
             cost=2000,
             price=4000,
-            expireation_date="2021-12-20",
+            expireation_date=timezone.now(),
             category=self.category_for_jenny,
         )
 
@@ -180,7 +192,7 @@ class ProductListTestCase(BaseAPITestCase):
         # 자신의 카페의 상품 목록을 조회할 수 있습니다.
         response = self.client.get(url)
         self._test_response_format(response)
-        self.assertEqual(len(response.data["data"]), 2)
+        self.assertEqual(len(response.data["data"]), 3)
 
     def test_list_another_cafe(self):
         """
@@ -194,6 +206,12 @@ class ProductListTestCase(BaseAPITestCase):
         response = self.client.get(url)
         self._test_response_format(response)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+        self.client.force_login(self.owner_jenny)
+        response = self.client.get(url)
+        self._test_response_format(response)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data["data"]), 1)
 
     def test_list_with_filtering_initial_consonant(self):
         """
@@ -218,9 +236,8 @@ class ProductListTestCase(BaseAPITestCase):
             kwargs={"cafe_uuid": self.cafe_for_james.uuid},
         )
         self.client.force_login(self.owner_james)
-        response = self.client.get(f"{url}?name=아메리카노")
+        response = self.client.get(f"{url}?search=아메리카노")
         self._test_response_format(response)
-        print(response.data)
         self.assertEqual(len(response.data["data"]), 1)
         self.assertEqual(response.data["data"][0]["name"], self.product_for_james1.name)
 
