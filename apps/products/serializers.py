@@ -150,8 +150,8 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     price = serializers.IntegerField()
     expireation_date = serializers.DateTimeField()
     category_name = serializers.CharField(source="category.name", read_only=True)
-    option_groups = serializers.SlugRelatedField(
-        slug_field="name", many=True, read_only=True
+    option_groups = serializers.PrimaryKeyRelatedField(
+        queryset=OptionGroup.objects.all(), many=True, write_only=True
     )
 
     class Meta:
