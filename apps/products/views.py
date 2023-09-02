@@ -8,6 +8,7 @@ from apps.cafes.models import Cafe
 from apps.cafes.urls import CAFE_URL_KEYWORD
 from apps.products.filters import ProductFilter
 from apps.products.models import Category, Product
+from apps.products.pagination import CafehereCursorPagination
 from apps.products.permissions import IsCafeOwner
 from apps.products.serializers import (
     CategorySerializer,
@@ -61,6 +62,7 @@ class ProductAPIViewSet(ModelViewSet):
     permission_classes = (IsCafeOwner,)
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ProductFilter
+    pagination_class = CafehereCursorPagination
 
     def get_queryset(self):
         queryset = self.queryset.filter(
@@ -77,3 +79,4 @@ class ProductAPIViewSet(ModelViewSet):
             or self.action == "delete"
         ):
             return ProductDetailSerializer
+        return super().get_serializer_class()
