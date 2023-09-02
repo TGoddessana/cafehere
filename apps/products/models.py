@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from core.utils.hangeul import get_initial_consonant
 from core.utils.models import TimeStampedMixin
 
 
@@ -79,7 +80,9 @@ class Product(TimeStampedMixin):
     cost = models.IntegerField(validators=[MinValueValidator(0)])
     price = models.IntegerField(validators=[MinValueValidator(0)])
     expireation_date = models.DateTimeField()
-
+    initial_consonant = models.CharField(
+        max_length=30, editable=False
+    )  # 초성 필드. 한글이 입력되면 자동으로 초성이 저장됩니다.
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="products"
     )
@@ -96,6 +99,12 @@ class Product(TimeStampedMixin):
                 fields=["name", "category"], name="unique_product_per_category"
             )
         ]
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        self.initial_consonant = get_initial_consonant(self.name)
+        super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return f"Product {self.name}"
