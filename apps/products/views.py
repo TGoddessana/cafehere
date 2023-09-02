@@ -1,23 +1,24 @@
 from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema
 from rest_framework.exceptions import NotFound
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from apps.cafes.models import Cafe
 from apps.cafes.urls import CAFE_URL_KEYWORD
 from apps.products.filters import ProductFilter
-from apps.products.models import Category, Product
+from apps.products.models import Category, OptionGroup, Product
 from apps.products.pagination import CafehereCursorPagination
 from apps.products.permissions import IsCafeOwner
 from apps.products.serializers import (
     CategorySerializer,
+    OptionGroupSerializer,
     ProductDetailSerializer,
     ProductListSerializer,
 )
 
 CATEGORY_TAG = "Category API"
 PRODUCT_TAG = "Product API"
+OPTIONGROUP_TAG = "OptionGroup API"
 
 
 @extend_schema(
@@ -26,7 +27,7 @@ PRODUCT_TAG = "Product API"
 class CategoryAPIViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = (IsAuthenticated, IsCafeOwner)
+    permission_classes = (IsCafeOwner,)
 
     def get_queryset(self):
         """
@@ -47,6 +48,20 @@ class CategoryAPIViewSet(ModelViewSet):
         if not self.get_queryset():
             raise NotFound()
         return super().list(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(cafe=Cafe.objects.get(uuid=self.kwargs[CAFE_URL_KEYWORD]))
+
+
+@extend_schema(
+    tags=[OPTIONGROUP_TAG],
+)
+class OptionGroupAPIViewSet(ModelViewSet):
+    lookup_url_kwarg = "optiongroup_id"
+
+    queryset = OptionGroup.objects.all()
+    serializer_class = OptionGroupSerializer
+    permission_classes = (IsCafeOwner,)
 
     def perform_create(self, serializer):
         serializer.save(cafe=Cafe.objects.get(uuid=self.kwargs[CAFE_URL_KEYWORD]))
