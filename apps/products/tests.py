@@ -211,7 +211,7 @@ class ProductListTestCase(BaseAPITestCase):
         response = self.client.get(url)
         self._test_response_format(response)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data["data"]), 1)
+        self.assertEqual(len(response.data["data"]["results"]), 1)
 
     def test_list_with_filtering_category(self):
         """
@@ -225,7 +225,7 @@ class ProductListTestCase(BaseAPITestCase):
         self.client.force_login(self.owner_james)
         response = self.client.get(url, {"category": self.category_for_james2.name})
         self._test_response_format(response)
-        self.assertEqual(len(response.data["data"]), 1)
+        self.assertEqual(len(response.data["data"]["results"]), 1)
 
     def test_list_with_filtering_initial_consonant(self):
         """
@@ -238,8 +238,10 @@ class ProductListTestCase(BaseAPITestCase):
         self.client.force_login(self.owner_james)
         response = self.client.get(url, {"search": "ㅇㅅㅍㄹ"})
         self._test_response_format(response)
-        self.assertEqual(len(response.data["data"]), 1)
-        self.assertEqual(response.data["data"][0]["name"], self.product_for_james2.name)
+        self.assertEqual(len(response.data["data"]["results"]), 1)
+        self.assertEqual(
+            response.data["data"]["results"][0]["name"], self.product_for_james2.name
+        )
 
     def test_list_with_filtering_name(self):
         """
@@ -252,8 +254,10 @@ class ProductListTestCase(BaseAPITestCase):
         self.client.force_login(self.owner_james)
         response = self.client.get(f"{url}?search=아메리카노")
         self._test_response_format(response)
-        self.assertEqual(len(response.data["data"]), 1)
-        self.assertEqual(response.data["data"][0]["name"], self.product_for_james1.name)
+        self.assertEqual(len(response.data["data"]["results"]), 1)
+        self.assertEqual(
+            response.data["data"]["results"][0]["name"], self.product_for_james1.name
+        )
 
     def test_list_with_filtering_not_filter_another_cafe(self):
         """
