@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from apps.cafes.urls import CAFE_URL_KEYWORD
@@ -76,7 +77,6 @@ class OptionGroupSerializer(serializers.ModelSerializer):
                     add_price=item["add_price"],
                     option_group=instance,
                 )
-        print(instance.options.all())
         instance.save()
         return instance
 
@@ -89,7 +89,9 @@ class OptionGroupSerializer(serializers.ModelSerializer):
                 CAFE_URL_KEYWORD
             ]
             if OptionGroup.objects.filter(cafe__uuid=cafe_uuid, name=value).exists():
-                raise serializers.ValidationError("Option group name must be unique.")
+                raise serializers.ValidationError(
+                    _("Option group name must be unique.")
+                )
         return value
 
 
@@ -126,7 +128,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         cafe_uuid = self.context["request"].parser_context["kwargs"][CAFE_URL_KEYWORD]
         if value not in Category.objects.filter(cafe__uuid=cafe_uuid):
             raise serializers.ValidationError(
-                "You can only select categories for that cafe."
+                _("You can only select categories for that cafe.")
             )
         return value
 
@@ -138,7 +140,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         for option_group in value:
             if option_group not in OptionGroup.objects.filter(cafe__uuid=cafe_uuid):
                 raise serializers.ValidationError(
-                    "You can only select option groups for that cafe."
+                    _("You can only select option groups for that cafe.")
                 )
         return value
 

@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-15 19:54+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: 정재균 <twicegoddessana1229@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: Korean\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/authentication/admin.py:62
+msgid "Basic informations"
+msgstr "기본 정보"
+
+#: apps/authentication/admin.py:74
+msgid "Permissions"
+msgstr "권한"
+
+#: apps/authentication/apps.py:8
+msgid "Authentication"
+msgstr "인증"
+
+#: apps/authentication/models.py:34
+msgid "active"
+msgstr "활성화 여부"
+
+#: apps/authentication/models.py:36
+msgid "Designates whether this user should be treated as active."
+msgstr "이 사용자를 활성 상태로 처리할지 여부를 지정합니다."
+
+#: apps/authentication/models.py:39
+msgid "staff status"
+msgstr "스태프 상태"
+
+#: apps/authentication/models.py:41
+msgid "Designates whether the user can log into this admin site."
+msgstr "사용자가 이 관리자 사이트에 로그인할 수 있는지 여부를 지정합니다."
+
+#: apps/cafes/apps.py:8
+msgid "Cafes"
+msgstr "카페"
+
+#: apps/products/apps.py:8
+msgid "Products"
+msgstr "상품"
+
+#: apps/products/serializers.py:93
+msgid "Option group name must be unique."
+msgstr "옵션 그룹 이름은 고유해야 합니다."
+
+#: apps/products/serializers.py:131
+msgid "You can only select categories for that cafe."
+msgstr "해당 카페에 속한 카테고리만 선택할 수 있습니다."
+
+#: apps/products/serializers.py:143
+msgid "You can only select option groups for that cafe."
+msgstr "해당 카페에 속한 옵션 그룹만 선택할 수 있습니다."
+
+#: core/settings/default.py:81
+msgid "Korean"
+msgstr "한국어"
+
+#: core/settings/default.py:82
+msgid "English"
+msgstr "영어"
+
+#: core/urls.py:11 core/urls.py:12
+msgid "Cafehere administration"
+msgstr "Caferhere 관리자 페이지"
+
+#: core/utils/validators.py:11
+#, python-brace-format
+msgid "{value} is not a valid mobile number"
+msgstr "{value} 는 유효한 휴대폰 번호가 아닙니다."

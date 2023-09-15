@@ -8,5 +8,6 @@ def validate_mobile_number(value):
     regex = r"^\+[0-9]{1,4}+-[0-9]{1,14}$"
     if not re.match(regex, value):
         raise ValidationError(
-            _(f"{value}s is not a valid mobile number"),
+            message=_("{value} is not a valid mobile number").format(value=value),
+            code="invalid_mobile_number",
         )
