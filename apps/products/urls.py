@@ -24,7 +24,12 @@ urlpatterns = [
     path(
         f"<uuid:{CAFE_URL_KEYWORD}>/categories/<uuid:{CATEGORY_URL_KEYWORD}>/",
         views.CategoryAPIViewSet.as_view(
-            {"get": "retrieve", "put": "update", "delete": "destroy"}
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
         ),
         name=CATEGORY_DETAIL_URL_NAME,
     ),
@@ -36,7 +41,12 @@ urlpatterns = [
     path(
         f"<uuid:{CAFE_URL_KEYWORD}>/optiongroups/<uuid:{OPTION_GROUP_URL_KEYWORD}>/",
         views.OptionGroupAPIViewSet.as_view(
-            {"get": "retrieve", "put": "update", "delete": "destroy"}
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
         ),
     ),
     path(
@@ -47,7 +57,12 @@ urlpatterns = [
     path(
         f"<uuid:{CAFE_URL_KEYWORD}>/products/<uuid:{PRODUCT_URL_KEYWORD}>/",
         views.ProductAPIViewSet.as_view(
-            {"get": "retrieve", "put": "update", "delete": "destroy"}
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
         ),
         name=PRODUCT_DETAIL_URL_NAME,
     ),
