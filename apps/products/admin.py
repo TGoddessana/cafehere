@@ -6,7 +6,7 @@ from apps.products.models import Category, Option, OptionGroup, Product
 @admin.register(Category)
 class CagtegoryAdmin(admin.ModelAdmin):
     list_filter = ("cafe",)
-    list_display = ("name", "cafe")
+    list_display = ("name", "uuid", "cafe")
 
 
 @admin.register(OptionGroup)

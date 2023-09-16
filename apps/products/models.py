@@ -2,10 +2,10 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from core.utils.hangeul import get_initial_consonant
-from core.utils.models import TimeStampedMixin
+from core.utils.models import TimeStampedMixin, UUID4Mixin
 
 
-class Category(models.Model):
+class Category(UUID4Mixin):
     name = models.CharField(max_length=30)
     cafe = models.ForeignKey(
         "cafes.Cafe",

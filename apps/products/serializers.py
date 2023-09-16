@@ -15,12 +15,24 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = (
-            "id",
+            "uuid",
             "name",
             "products",
             "products_count",
         )
         read_only_fields = ("products",)
+
+    def validate_name(self, value):
+        """
+        카테고리 이름은 해당 카페에서 유일해야 합니다.
+        """
+        if self.context["request"]._request.method == "POST":
+            cafe_uuid = self.context["request"].parser_context["kwargs"][
+                CAFE_URL_KEYWORD
+            ]
+            if Category.objects.filter(cafe__uuid=cafe_uuid, name=value).exists():
+                raise serializers.ValidationError(_("Category name must be unique."))
+        return value
 
 
 class OptionSerializer(serializers.ModelSerializer):

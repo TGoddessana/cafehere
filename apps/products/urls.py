@@ -5,7 +5,7 @@ from apps.products import views
 
 CATEGORY_LIST_URL_NAME = "category-list"
 CATEGORY_DETAIL_URL_NAME = "category-detail"
-CATEGORY_URL_KEYWORD = "category_id"
+CATEGORY_URL_KEYWORD = "category_uuid"
 
 OPTION_GROUP_LIST_URL_NAME = "optiongroup-list"
 OPTION_GROUP_DETAIL_URL_NAME = "optiongroup-detail"
@@ -22,7 +22,7 @@ urlpatterns = [
         name=CATEGORY_LIST_URL_NAME,
     ),
     path(
-        f"<uuid:{CAFE_URL_KEYWORD}>/categories/<int:{CATEGORY_URL_KEYWORD}>/",
+        f"<uuid:{CAFE_URL_KEYWORD}>/categories/<uuid:{CATEGORY_URL_KEYWORD}>/",
         views.CategoryAPIViewSet.as_view(
             {"get": "retrieve", "put": "update", "delete": "destroy"}
         ),
