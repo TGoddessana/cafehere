@@ -55,6 +55,9 @@ You can use this server to manage your cafe's products.
     - If not logged in, owners cannot use product option-related APIs.
     - Even if logged in, they cannot access other owners' product option information.
 
+### Database ERD
+![erd.svg](erd.svg)
+
 ## What technologies were used?
 
 The main language used is `Python 3.11`.
