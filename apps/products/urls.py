@@ -9,7 +9,7 @@ CATEGORY_URL_KEYWORD = "category_uuid"
 
 OPTION_GROUP_LIST_URL_NAME = "optiongroup-list"
 OPTION_GROUP_DETAIL_URL_NAME = "optiongroup-detail"
-OPTION_GROUP_URL_KEYWORD = "optiongroup_id"
+OPTION_GROUP_URL_KEYWORD = "optiongroup_uuid"
 
 PRODUCT_LIST_URL_NAME = "product-list"
 PRODUCT_DETAIL_URL_NAME = "product-detail"
@@ -34,7 +34,7 @@ urlpatterns = [
         name=OPTION_GROUP_LIST_URL_NAME,
     ),
     path(
-        f"<uuid:{CAFE_URL_KEYWORD}>/optiongroups/<int:{OPTION_GROUP_URL_KEYWORD}>/",
+        f"<uuid:{CAFE_URL_KEYWORD}>/optiongroups/<uuid:{OPTION_GROUP_URL_KEYWORD}>/",
         views.OptionGroupAPIViewSet.as_view(
             {"get": "retrieve", "put": "update", "delete": "destroy"}
         ),

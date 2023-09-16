@@ -51,7 +51,7 @@ class OptionGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = OptionGroup
         fields = (
-            "id",
+            "uuid",
             "name",
             "options",
             "options_count",

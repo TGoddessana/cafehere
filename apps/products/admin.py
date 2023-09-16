@@ -12,7 +12,7 @@ class CagtegoryAdmin(admin.ModelAdmin):
 @admin.register(OptionGroup)
 class OptionGroupAdmin(admin.ModelAdmin):
     list_filter = ("cafe",)
-    list_display = ("name", "cafe")
+    list_display = ("name", "uuid", "cafe")
 
     class OptionInline(admin.TabularInline):
         model = Option

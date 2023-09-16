@@ -59,8 +59,8 @@ class CategoryAPIViewSet(ModelViewSet):
     tags=[OPTIONGROUP_TAG],
 )
 class OptionGroupAPIViewSet(ModelViewSet):
-    lookup_url_kwarg = "optiongroup_id"
-
+    lookup_field = "uuid"
+    lookup_url_kwarg = "optiongroup_uuid"
     queryset = OptionGroup.objects.all()
     serializer_class = OptionGroupSerializer
     permission_classes = (IsCafeOwner,)

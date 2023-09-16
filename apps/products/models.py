@@ -27,7 +27,7 @@ class Category(UUID4Mixin):
         return f"Category {self.name}"
 
 
-class OptionGroup(models.Model):
+class OptionGroup(UUID4Mixin):
     """
     옵션 그룹을 나타내는 모델입니다. 옵션 그룹은 여러 옵션들을 가질 수 있습니다.
     한 카페 안에서는, 옵션 그룹의 이름은 유일해야 합니다.
