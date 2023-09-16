@@ -77,7 +77,7 @@ class Option(models.Model):
         return f"Option {self.name}"
 
 
-class Product(TimeStampedMixin):
+class Product(UUID4Mixin, TimeStampedMixin):
     name = models.CharField(max_length=30)
     description = models.TextField()
     cost = models.IntegerField(validators=[MinValueValidator(0)])

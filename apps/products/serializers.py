@@ -111,18 +111,21 @@ class ProductListSerializer(serializers.ModelSerializer):
     description = serializers.CharField(max_length=30, write_only=True)
     cost = serializers.IntegerField(write_only=True)
     expireation_date = serializers.DateTimeField(write_only=True)
-    category = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all(), write_only=True
+    category = serializers.SlugRelatedField(
+        slug_field="uuid", queryset=Category.objects.all(), write_only=True
     )
     category_name = serializers.CharField(source="category.name", read_only=True)
-    option_groups = serializers.PrimaryKeyRelatedField(
-        queryset=OptionGroup.objects.all(), many=True, write_only=True
+    option_groups = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=OptionGroup.objects.all(),
+        many=True,
+        write_only=True,
     )
 
     class Meta:
         model = Product
         fields = (
-            "id",
+            "uuid",
             "name",
             "description",
             "cost",
@@ -156,6 +159,22 @@ class ProductListSerializer(serializers.ModelSerializer):
                 )
         return value
 
+    def validate_name(self, value):
+        """
+        제품 이름은 해당 카페에서 유일해야 합니다.
+        """
+        if self.context["request"]._request.method == "POST":
+            cafe_uuid = self.context["request"].parser_context["kwargs"][
+                CAFE_URL_KEYWORD
+            ]
+            if (
+                Product.objects.select_related("category__cafe")
+                .filter(category__cafe__uuid=cafe_uuid, name=value)
+                .exists()
+            ):
+                raise serializers.ValidationError(_("Product name must be unique."))
+        return value
+
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=30)
@@ -171,7 +190,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            "id",
+            "uuid",
             "name",
             "description",
             "cost",

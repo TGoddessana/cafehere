@@ -13,7 +13,7 @@ OPTION_GROUP_URL_KEYWORD = "optiongroup_uuid"
 
 PRODUCT_LIST_URL_NAME = "product-list"
 PRODUCT_DETAIL_URL_NAME = "product-detail"
-PRODUCT_URL_KEYWORD = "product_id"
+PRODUCT_URL_KEYWORD = "product_uuid"
 
 urlpatterns = [
     path(
@@ -45,7 +45,7 @@ urlpatterns = [
         name=PRODUCT_LIST_URL_NAME,
     ),
     path(
-        f"<uuid:{CAFE_URL_KEYWORD}>/products/<int:{PRODUCT_URL_KEYWORD}>/",
+        f"<uuid:{CAFE_URL_KEYWORD}>/products/<uuid:{PRODUCT_URL_KEYWORD}>/",
         views.ProductAPIViewSet.as_view(
             {"get": "retrieve", "put": "update", "delete": "destroy"}
         ),

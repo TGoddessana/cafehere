@@ -73,7 +73,8 @@ class OptionGroupAPIViewSet(ModelViewSet):
     tags=[PRODUCT_TAG],
 )
 class ProductAPIViewSet(ModelViewSet):
-    lookup_url_kwarg = "product_id"
+    lookup_field = "uuid"
+    lookup_url_kwarg = "product_uuid"
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
     permission_classes = (IsCafeOwner,)

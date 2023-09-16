@@ -345,7 +345,7 @@ class ProductDetailTestCase(BaseAPITestCase):
             "product-detail",
             kwargs={
                 "cafe_uuid": self.cafe_for_james.uuid,
-                "product_id": self.product_for_james1.id,
+                "product_uuid": self.product_for_james1.uuid,
             },
         )
 
@@ -367,7 +367,7 @@ class ProductDetailTestCase(BaseAPITestCase):
             "product-detail",
             kwargs={
                 "cafe_uuid": self.cafe_for_jenny.uuid,
-                "product_id": self.product_for_jenny.id,
+                "product_uuid": self.product_for_jenny.uuid,
             },
         )
         response = self.client.get(url)
@@ -446,7 +446,7 @@ class ProductDeleteTestCase(BaseAPITestCase):
             "product-detail",
             kwargs={
                 "cafe_uuid": self.cafe_for_james.uuid,
-                "product_id": self.product_for_james1.id,
+                "product_uuid": self.product_for_james1.uuid,
             },
         )
         self.client.force_login(self.owner_james)
@@ -468,7 +468,7 @@ class ProductDeleteTestCase(BaseAPITestCase):
             "product-detail",
             kwargs={
                 "cafe_uuid": self.cafe_for_jenny.uuid,
-                "product_id": self.product_for_jenny.id,
+                "product_uuid": self.product_for_jenny.uuid,
             },
         )
         self.client.force_login(self.owner_james)

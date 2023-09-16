@@ -23,4 +23,4 @@ class OptionGroupAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "initial_consonant", "cafe")
+    list_display = ("name", "uuid", "initial_consonant", "cafe")
