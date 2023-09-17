@@ -1,9 +1,9 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 
 from apps.cafes.models import Cafe
 from apps.cafes.serializers import CafeSerializer
+from apps.products.permissions import IsCafeOwner
 
 TAG = "Cafe API"
 
@@ -40,12 +40,11 @@ TAG = "Cafe API"
 class CafeAPIViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     lookup_url_kwarg = "cafe_uuid"
-    queryset = Cafe.objects.all()
     serializer_class = CafeSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsCafeOwner,)
 
     def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
+        return Cafe.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

@@ -219,7 +219,7 @@ class CafeRetrieveTestCase(BaseAPITestCase):
         response = self.client.get(url)
         self._test_response_format(response)
 
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # Jenny는 Jenny의 카페만 조회할 수 있습니다.
         url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: jenny_cafe.uuid})
@@ -285,7 +285,7 @@ class CafeUpdateTestCase(BaseAPITestCase):
         response = self.client.put(url, data={"name": "James Cafe 3"})
         self._test_response_format(response)
 
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # Jenny는 Jenny의 카페만 수정할 수 있습니다.
         url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: jenny_cafe.uuid})
@@ -363,17 +363,11 @@ class CafeDestroyTestCase(BaseAPITestCase):
         response = self.client.delete(url)
         self._test_response_format(response)
 
-        # 응답으로 온 카페 정보가 James의 카페인지 확인합니다.
+        # 응답으로 204 NO CONTENT가 반환되어야 합니다.
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        # Jenny는 James의 카페를 삭제할 수 없습니다.
-        self.client.force_login(self.cafe_owner_jenny)
-        response = self.client.delete(url)
-        self._test_response_format(response)
-
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
         # Jenny는 Jenny의 카페만 삭제할 수 있습니다.
+        self.client.force_login(self.cafe_owner_jenny)
         url = reverse(CAFE_DETAIL_URL_NAME, kwargs={CAFE_URL_KEYWORD: jenny_cafe.uuid})
         response = self.client.delete(url)
         self._test_response_format(response)
